@@ -9,20 +9,47 @@
 
 <body>
 
-<!-- 🔐 SIMPLE ADMIN PASSWORD PROTECTION -->
+<!-- 🔐 ADMIN PASSWORD PROTECTION (ONE-TIME LOGIN) -->
 <script>
   const ADMIN_PASSWORD = "ansh@automation";
+  const LOGIN_KEY = "admin_logged_in";
 
-  const entered = prompt("Enter Admin Password:");
-  if (entered !== ADMIN_PASSWORD) {
-    alert("Wrong password");
-    window.location.href = "/";
+  if (localStorage.getItem(LOGIN_KEY) !== "true") {
+    const entered = prompt("🔐 Enter Admin Password:");
+
+    if (entered === ADMIN_PASSWORD) {
+      localStorage.setItem(LOGIN_KEY, "true");
+    } else {
+      alert("❌ Wrong password");
+      window.location.href = "/";
+    }
+  }
+
+  function logoutAdmin() {
+    localStorage.removeItem(LOGIN_KEY);
+    alert("Logged out successfully");
+    location.reload();
   }
 </script>
 
 <div class="container">
-  <h1>📊 WhatsApp Admin Dashboard</h1>
 
+  <!-- HEADER -->
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h1>📊 WhatsApp Admin Dashboard</h1>
+    <button onclick="logoutAdmin()" style="
+      padding:8px 14px;
+      background:#ff4d4d;
+      color:#fff;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+    ">
+      Logout
+    </button>
+  </div>
+
+  <!-- STATS -->
   <div class="cards">
     <div class="card">
       Total Leads<br>
@@ -40,6 +67,7 @@
     </div>
   </div>
 
+  <!-- TABLE -->
   <h2>Recent Leads</h2>
 
   <div class="table-wrapper">
@@ -53,10 +81,11 @@
         </tr>
       </thead>
       <tbody id="leadTable">
-        <!-- JS will inject rows here -->
+        <!-- JS injects rows -->
       </tbody>
     </table>
   </div>
+
 </div>
 
 <script src="script.js"></script>
