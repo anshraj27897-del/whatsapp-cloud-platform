@@ -6,47 +6,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>📊 WhatsApp Admin Dashboard</h1>
+<!-- 🔐 SIMPLE ADMIN PASSWORD PROTECTION -->
+<script>
+  const ADMIN_PASSWORD = "ansh@automation";
 
-    <div class="cards">
-      <div class="card">
-        Total Leads<br>
-        <span id="totalLeads">0</span>
-      </div>
+  const entered = prompt("Enter Admin Password:");
+  if (entered !== ADMIN_PASSWORD) {
+    alert("Wrong password");
+    window.location.href = "/";
+  }
+</script>
 
-      <div class="card">
-        Today Leads<br>
-        <span id="todayLeads">--</span>
-      </div>
+<div class="container">
+  <h1>📊 WhatsApp Admin Dashboard</h1>
 
-      <div class="card">
-        Active Bots<br>
-        <span>1</span>
-      </div>
+  <div class="cards">
+    <div class="card">
+      Total Leads<br>
+      <span id="totalLeads">0</span>
     </div>
 
-    <h2>Recent Leads</h2>
+    <div class="card">
+      Today Leads<br>
+      <span id="todayLeads">0</span>
+    </div>
 
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>User Number</th>
-            <th>Message</th>
-            <th>Lead Type</th>
-          </tr>
-        </thead>
-        <tbody id="leadTable">
-          <!-- JS will inject rows here -->
-        </tbody>
-      </table>
+    <div class="card">
+      Active Bots<br>
+      <span>1</span>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <h2>Recent Leads</h2>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>User Number</th>
+          <th>Message</th>
+          <th>Lead Type</th>
+        </tr>
+      </thead>
+      <tbody id="leadTable">
+        <!-- JS will inject rows here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
