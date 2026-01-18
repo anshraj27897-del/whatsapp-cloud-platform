@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Dashboard – WhatsApp Cloud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,33 +12,41 @@
     <h1>📊 WhatsApp Admin Dashboard</h1>
 
     <div class="cards">
-      <div class="card">Total Leads<br><span>--</span></div>
-      <div class="card">Today Leads<br><span>--</span></div>
-      <div class="card">Active Bots<br><span>1</span></div>
+      <div class="card">
+        Total Leads<br>
+        <span id="totalLeads">0</span>
+      </div>
+
+      <div class="card">
+        Today Leads<br>
+        <span id="todayLeads">--</span>
+      </div>
+
+      <div class="card">
+        Active Bots<br>
+        <span>1</span>
+      </div>
     </div>
 
     <h2>Recent Leads</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>User Number</th>
-          <th>Message</th>
-          <th>Lead Type</th>
-        </tr>
-      </thead>
-      <tbody id="leadTable">
-        <tr>
-          <td>--</td>
-          <td>--</td>
-          <td>--</td>
-          <td>--</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>User Number</th>
+            <th>Message</th>
+            <th>Lead Type</th>
+          </tr>
+        </thead>
+        <tbody id="leadTable">
+          <!-- JS will inject rows here -->
+        </tbody>
+      </table>
+    </div>
   </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
