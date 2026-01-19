@@ -2,45 +2,51 @@
 const SHEET_ID = "1CVWhUsvuCJ-duBnh8o-kDeazROoPwTlXz3lQBeRzVTk";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
-function isValidDate(dateStr) {
-  if (!dateStr) return false;
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return false;
-  if (d.getFullYear() < 2023) return false; // remove 1899, junk dates
-  return true;
+// 🧠 CSV line safe parser (handles commas, emojis, line breaks)
+function parseCSV(text) {
+  return text
+    .trim()
+    .split("\n")
+    .map(row => {
+      const parts = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      return parts.map(p => p.replace(/^"|"$/g, "").trim());
+    });
 }
 
+// 🟢 Check if date exists (simple, demo-safe)
+function hasDate(value) {
+  return value && value.length > 5;
+}
+
+// 🟢 Check today (safe)
 function isToday(dateStr) {
   const d = new Date(dateStr);
-  const today = new Date();
+  if (isNaN(d.getTime())) return false;
+
+  const t = new Date();
   return (
-    d.getDate() === today.getDate() &&
-    d.getMonth() === today.getMonth() &&
-    d.getFullYear() === today.getFullYear()
+    d.getDate() === t.getDate() &&
+    d.getMonth() === t.getMonth() &&
+    d.getFullYear() === t.getFullYear()
   );
 }
 
 async function fetchLeads() {
   try {
-    const res = await fetch(SHEET_URL);
+    const res = await fetch(SHEET_URL + "&_=" + Date.now()); // cache-buster
     const text = await res.text();
 
-    const rows = text
-      .trim()
-      .split("\n")
-      .map(r => r.split(","));
+    const rows = parseCSV(text);
 
-    // Remove header
+    // remove header
     let data = rows.slice(1);
 
-    // ✅ CLEAN DATA
+    // ✅ CLEAN + SAFE FILTER
     data = data.filter(r =>
       r.length >= 4 &&
-      isValidDate(r[0]) &&
-      r[2] &&
-      r[2] !== "-" &&
-      r[3] &&
-      r[3] !== "-"
+      hasDate(r[0]) &&
+      r[2] && r[2] !== "-" &&
+      r[3] && r[3] !== "-"
     );
 
     // ✅ TOTAL LEADS
@@ -50,7 +56,7 @@ async function fetchLeads() {
     const todayCount = data.filter(r => isToday(r[0])).length;
     document.getElementById("todayLeads").innerText = todayCount;
 
-    // ✅ TABLE
+    // ✅ TABLE RENDER
     const tableBody = document.getElementById("leadTable");
     tableBody.innerHTML = "";
 
@@ -63,13 +69,13 @@ async function fetchLeads() {
           <td>${row[0]}</td>
           <td>${row[2]}</td>
           <td>${row[3]}</td>
-          <td>${row[5] || "General"}</td>
+          <td>${row[5] ? row[5] : "General"}</td>
         `;
         tableBody.appendChild(tr);
       });
 
   } catch (err) {
-    console.error("❌ Error loading leads:", err);
+    console.error("❌ Admin panel load error:", err);
   }
 }
 
