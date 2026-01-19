@@ -1,6 +1,6 @@
 // 🔗 Google Sheet CSV public URL
 const SHEET_ID = "1CVWhUsvuCJ-duBnh8o-kDeazROoPwTlXz3lQBeRzVTk";
-const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
 
 // 🧠 CSV line safe parser (handles commas, emojis, line breaks)
 function parseCSV(text) {
