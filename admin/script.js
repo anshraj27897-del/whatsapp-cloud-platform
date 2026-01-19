@@ -3,34 +3,40 @@ const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?for
 
 function parseCSV(text) {
   const rows = [];
-  let current = [];
-  let insideQuotes = false;
-  let value = "";
+  let row = [];
+  let val = "";
+  let inQuotes = false;
 
-  for (let char of text) {
-    if (char === '"' ) {
-      insideQuotes = !insideQuotes;
-    } else if (char === "," && !insideQuotes) {
-      current.push(value.trim());
-      value = "";
-    } else if (char === "\n" && !insideQuotes) {
-      current.push(value.trim());
-      rows.push(current);
-      current = [];
-      value = "";
+  for (let c of text) {
+    if (c === '"') inQuotes = !inQuotes;
+    else if (c === "," && !inQuotes) {
+      row.push(val);
+      val = "";
+    } else if (c === "\n" && !inQuotes) {
+      row.push(val);
+      rows.push(row);
+      row = [];
+      val = "";
     } else {
-      value += char;
+      val += c;
     }
   }
-  if (value) {
-    current.push(value.trim());
-    rows.push(current);
+  if (val) {
+    row.push(val);
+    rows.push(row);
   }
   return rows;
 }
 
+// ✅ DD/MM/YYYY safe parser
+function parseIndianDate(dateStr) {
+  const [d, m, rest] = dateStr.split("/");
+  const [y, time] = rest.split(" ");
+  return new Date(`${y}-${m}-${d} ${time}`);
+}
+
 function isToday(dateStr) {
-  const d = new Date(dateStr);
+  const d = parseIndianDate(dateStr);
   const t = new Date();
   return (
     d.getDate() === t.getDate() &&
@@ -41,15 +47,13 @@ function isToday(dateStr) {
 
 async function fetchLeads() {
   try {
-    const res = await fetch(SHEET_URL);
+    const res = await fetch(SHEET_URL + "&v=" + Date.now()); // cache bust
     const text = await res.text();
 
     const rows = parseCSV(text);
-
     const data = rows.slice(1).filter(r => r[0] && r[2] && r[3]);
 
     document.getElementById("totalLeads").innerText = data.length;
-
     document.getElementById("todayLeads").innerText =
       data.filter(r => isToday(r[0])).length;
 
@@ -68,7 +72,7 @@ async function fetchLeads() {
     });
 
   } catch (e) {
-    console.error("Admin fetch error:", e);
+    console.error("Dashboard error:", e);
   }
 }
 
