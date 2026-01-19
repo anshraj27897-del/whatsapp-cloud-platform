@@ -1,17 +1,17 @@
 # WhatsApp Cloud Automation Platform
 
-A complete WhatsApp automation system built on Meta’s official Cloud API.
-Designed for demos, agencies, and production use.
+A complete WhatsApp automation system built on Meta’s official WhatsApp Cloud API.
+Designed for demos, agencies, and production-ready client deployments.
 
 ---
 
 ## 🚀 What This Platform Does
 
-- Automatically replies to WhatsApp messages
+- Automatically replies to incoming WhatsApp messages
 - Captures and stores leads in Google Sheets
 - Detects user intent (Demo, Pricing, Support)
 - Sends instant email alerts to admin
-- Shows all leads in a real-time admin dashboard
+- Displays all leads in a real-time admin dashboard
 
 ---
 
@@ -20,10 +20,10 @@ Designed for demos, agencies, and production use.
 - WhatsApp auto-replies (24/7)
 - Google Sheets lead tracking
 - Smart intent detection
-- Admin dashboard
-- Email notifications
-- Cloud API based (Meta official)
-- Reusable for agencies & multiple clients
+- Real-time admin dashboard
+- Email notifications for important leads
+- Built on official Meta WhatsApp Cloud API
+- Reusable system for agencies & multiple clients
 
 ---
 
@@ -31,9 +31,9 @@ Designed for demos, agencies, and production use.
 
 1. User sends a WhatsApp message  
 2. Bot replies instantly  
-3. Lead saved in Google Sheets  
-4. Admin gets email alert  
-5. Lead appears in dashboard in real time  
+3. Lead is saved in Google Sheets  
+4. Admin receives email notification  
+5. Lead appears on admin dashboard in real time  
 
 ---
 
@@ -41,25 +41,37 @@ Designed for demos, agencies, and production use.
 
 - Marketing Agencies
 - Coaching Institutes
-- Real Estate
-- E-commerce
+- Real Estate Businesses
+- E-commerce Brands
 - SaaS & Startups
 
 ---
 
-## 🔧 Client Setup
+## 🔧 Client Setup Model
 
-For each client:
-- New WhatsApp number
-- New Google Sheet
-- Separate admin access
+For each client deployment:
+
+- Separate WhatsApp number
+- Separate Google Sheet
+- Dedicated admin access
 - Independent automation flow
 
-One-time setup, reusable system.
+✅ One-time system setup  
+♻️ Reusable for unlimited clients  
 
 ---
 
-## 📌 Note
+## 📌 Important Note
 
-This repository is used for demo & presentation.
-Production setup is done separately per client.
+This repository is used for **demo, documentation, and presentation purposes**.
+
+Production automation is deployed separately for each client with:
+- Client-owned WhatsApp number
+- Client-owned Google Sheet
+- Secure environment variables
+
+---
+
+## 📞 Live Demo
+
+Use the website CTA or message the connected WhatsApp demo number to experience the automation in real time.
